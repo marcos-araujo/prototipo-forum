@@ -1,0 +1,18 @@
+@CHARSET "ISO-8859-1";
+
+.esconder{
+	display: none;
+}
+
+.mostrar{
+	display: block;
+}
+
+.botao{
+	margin:auto;
+}
+
+#rodape{
+	font-style: italic;
+	font-size: 15px;
+}
