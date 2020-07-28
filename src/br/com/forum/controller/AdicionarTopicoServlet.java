@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.forum.dao.TopicoDAO;
 import br.com.forum.model.Topico;
 
-@WebServlet("/adicionaTopico")
-public class AdicionarTopicoController extends HttpServlet {
+@WebServlet("/adicionarTopico")
+public class AdicionarTopicoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class AdicionarTopicoController extends HttpServlet {
 		TopicoDAO dao = new TopicoDAO(connection);
 		dao.adiciona(topico);
 		
-		request.getRequestDispatcher(pagina).forward(request, response);
+		request.getRequestDispatcher("/forum" + pagina).forward(request, response);
 			
 	}
 

@@ -13,17 +13,27 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.forum.dao.TopicoDAO;
 import br.com.forum.model.Topico;
 
-@WebServlet("/forum")
-public class ServletController extends HttpServlet {
+@WebServlet("/listarTopicos")
+public class ListarTopicosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
 		Connection connection = (Connection) request.getAttribute("connection");
+		
+		Integer numeroExibicao = (request.getParameter("n") != null) ? new Integer(request.getParameter("n")) : 0;
+
 		TopicoDAO dao = new TopicoDAO(connection);
-		ArrayList<Topico> lista = dao.lista();
+		
+		ArrayList<Topico> lista = dao.listaTopicos(new Long(request.getParameter("t")), numeroExibicao);
+		
 		request.setAttribute("lista", lista);
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		
+		request.setAttribute("numeroExibicao", numeroExibicao);
+		
+		request.getRequestDispatcher("/topico.jsp").forward(request, response);
+
 	}
 
 }

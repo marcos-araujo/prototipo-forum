@@ -102,7 +102,7 @@ public class TopicoDAO{
 		return topicos;
 	}
 	
-	public List<Topico>listaTopicos(long id, long exibicao){
+	public ArrayList<Topico>listaTopicos(long id, long exibicao){
 		ResultSet rs = null;
 		try{
 			stmtListaTopicos = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = ?");

@@ -15,22 +15,22 @@
 	<body>
 		<div id="rodape">Desenvolvido por Marcos Araújo - <a href="sobre.html">Sobre</a></div>
 		<br />
-		<a href="/Forum">[Home]</a>
+		<a href="forum">[Home]</a>
 		<h1>Fórum</h1>
 		<hr />
 		<table>
 			<%
 				Integer pagina = (request.getParameter("p") != null) ? new Integer(request.getParameter("p")) : 0;
-					Integer idThread = (request.getParameter("t") != null) ? new Integer(request.getParameter("t")) : 0;
-					Integer numeroExibicao = (request.getParameter("n") != null) ? new Integer(request.getParameter("n")) : 0;
-					TopicoDAO dao = new TopicoDAO();
-					ArrayList<Topico> lista = new ArrayList<Topico>(); 
-					lista = (ArrayList<Topico>)dao.listaTopicos(new Long(request.getParameter("t")),numeroExibicao);
-					//Mostra 10 em cada página
-					int tamanho = (pagina+1)*10;
-					if(tamanho>lista.size())
-						tamanho = lista.size();
-					for(int x=pagina*10; x<tamanho; x++){
+				Integer idThread = (request.getParameter("t") != null) ? new Integer(request.getParameter("t")) : 0;
+				Integer numeroExibicao = Integer.valueOf(request.getAttribute("numeroExibicao").toString());
+				
+				ArrayList<Topico> lista = (ArrayList<Topico>)request.getAttribute("lista");
+				
+				//Mostra 10 em cada página
+				int tamanho = (pagina+1)*10;
+				if(tamanho>lista.size())
+					tamanho = lista.size();
+				for(int x=pagina*10; x<tamanho; x++){
 			%>		
 				<tr>
 					<td><%=lista.get(x).getNivel()%>. <%=lista.get(x).getDataFormatada()%>: <a href="javascript:responder(<%=lista.get(x).getId()%>);"><%=lista.get(x).getTexto()%> </a></td>
@@ -58,14 +58,14 @@
 			<tr>
 				<td colspan="2">
 				<%
-				int paginacao;
-				if(lista.size()>10){
-					paginacao = (lista.size()%10 == 0)?(lista.size()/10)-1:(lista.size()/10);
+					int paginacao;
+					if(lista.size()>10){
+						paginacao = (lista.size()%10 == 0)?(lista.size()/10)-1:(lista.size()/10);
 				%>
-				[
-				<% for(int y=0; y<=paginacao; y++){%>
-					<a href="/Forum/thread.jsp?p=<%=y%>&t=<%=idThread%>&n=<%=numeroExibicao%>"><%=y%></a> 
-				<%} %>
+					[
+					<% for(int y=0; y<=paginacao; y++){%>
+						<a href="/Forum/thread.jsp?p=<%=y%>&t=<%=idThread%>&n=<%=numeroExibicao%>"><%=y%></a> 
+					<%} %>
 				]
 				<%} %>
 				</td>

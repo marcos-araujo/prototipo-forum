@@ -15,13 +15,13 @@
 	<body>
 		<div id="rodape">Desenvolvido por Marcos Araújo - <a href="sobre.html">Sobre</a></div>
 		<br />
-		<a href="listaNegada.jsp">[Blacklist]</a>
+		<a href="listarPalavraNegada">[Blacklist]</a>
 		<h1>Fórum</h1>
 		<hr />
-		<%
-			Integer pagina = (request.getParameter("p") != null)? new Integer(request.getParameter("p")):0;
-		%>
-		<form action="adicionaTopico">
+		
+		<% Integer pagina = (request.getParameter("p") != null) ? new Integer(request.getParameter("p")):0; %>
+		
+		<form action="adicionarTopico" method="post">
 			<input name="idPai" type="hidden" value="0" />
 			<input name="pagina" type="hidden" value="<%=pagina%>" />
 			<textarea name="texto" rows="4" cols="50"></textarea>
@@ -38,7 +38,7 @@
 				for(int x=pagina*10; x<tamanho; x++){
 			%>		
 				<tr>
-					<td><a href="topico.jsp?n=<%=x+1%>&t=<%=lista.get(x).getId()%>"><%=(x+1)%>.<%=lista.get(x).getDataFormatada()%></a></td>
+					<td><a href="listarTopicosd?n=<%=x+1%>&t=<%=lista.get(x).getId()%>"><%=(x+1)%>.<%=lista.get(x).getDataFormatada()%></a></td>
 					<td><%=lista.get(x).getTexto()%></td>
 				</tr>
 			<%

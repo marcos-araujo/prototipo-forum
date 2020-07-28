@@ -15,8 +15,11 @@ public class ListaNegada{
 
 	//Lógica de validação dos comentários contra a black list 
 	public String verificaListaNegada(String texto, Connection connection){
+		
 		palavraDAO = new PalavraNegadaDAO(connection);
-		listaPalavra = (ArrayList<PalavraNegada>) palavraDAO.lista();
+		
+		listaPalavra = palavraDAO.lista();
+		
 		for(int x=0; x<listaPalavra.size(); x++){
 			//Verificar Possibilidades
 			String regex = "(?i)" + listaPalavra.get(x).getPalavra().replace("a", "(a|@|ã|á|à|â)").replace("i", "(i|1|í|ì)").replace("o", "(o|0|ó|ò|ô|õ)").replace("s", "(s|&)");
