@@ -31,7 +31,7 @@
 			</tr>
 			<tr>
 				<td id="<%=lista.get(x).getId()%>" class="esconder">
-					<form action="adicionaTopico">
+					<form action="adicionarTopico">
 						<input name="thread" type="hidden" value="<%=idThread%>" />
 						<input name="pagina" type="hidden" value="<%=pagina%>" />
 						<input name="idPai" type="hidden" value="<%=lista.get(x).getId()%>" />
