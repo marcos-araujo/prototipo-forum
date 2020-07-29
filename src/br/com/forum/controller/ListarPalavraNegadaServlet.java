@@ -28,7 +28,7 @@ public class ListarPalavraNegadaServlet extends HttpServlet {
 
 		request.setAttribute("lista", lista);
 		
-		request.getRequestDispatcher("/listaNegada.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/views/blacklist/listaNegada.jsp").forward(request, response);
 
 	}
 

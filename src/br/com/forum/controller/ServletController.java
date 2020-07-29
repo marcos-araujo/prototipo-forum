@@ -23,7 +23,7 @@ public class ServletController extends HttpServlet {
 		TopicoDAO dao = new TopicoDAO(connection);
 		ArrayList<Topico> lista = dao.lista();
 		request.setAttribute("lista", lista);
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/views/topico/index.jsp").forward(request, response);
 	}
 
 }

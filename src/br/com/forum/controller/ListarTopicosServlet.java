@@ -32,7 +32,7 @@ public class ListarTopicosServlet extends HttpServlet {
 		
 		request.setAttribute("numeroExibicao", numeroExibicao);
 		
-		request.getRequestDispatcher("/topico.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/views/topico/topico.jsp").forward(request, response);
 
 	}
 
