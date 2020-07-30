@@ -8,3 +8,6 @@
 		<title>Fórum</title>
 	</head>
 	<body>
+		<div id="rodape">Desenvolvido por Marcos Araújo - <a href="sobre">Sobre</a></div>
+		<br />
+	

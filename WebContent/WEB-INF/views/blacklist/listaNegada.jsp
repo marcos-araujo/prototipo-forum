@@ -7,8 +7,6 @@
 
 <c:import url="../general/header.jsp" />
 
-	<div id="rodape">Desenvolvido por Marcos Araújo - <a href="sobre.html">Sobre</a></div>
-	<br />
 	<a href="forum">[Home]</a>
 	<h1>Blacklist</h1>
 	<hr />
