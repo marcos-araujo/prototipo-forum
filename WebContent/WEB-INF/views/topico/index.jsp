@@ -47,7 +47,7 @@
 			%>
 			[
 			<% for(int y=0; y<=paginacao; y++){%>
-				<a href="/Forum/?p=<%=y%>"><%=y%></a> 
+				<a href="/Forum/forum?p=<%=y%>"><%=y%></a> 
 			<%} %>
 			]
 			<%} %>
