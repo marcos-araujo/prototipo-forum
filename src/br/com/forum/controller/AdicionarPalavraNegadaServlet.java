@@ -2,6 +2,7 @@ package br.com.forum.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +27,12 @@ public class AdicionarPalavraNegadaServlet extends HttpServlet {
 		palavra.setPalavra(texto);
 		
 		PalavraNegadaDAO dao = new PalavraNegadaDAO(connection);
-		dao.adiciona(palavra);
+		
+		try {
+			dao.adiciona(palavra);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		request.getRequestDispatcher("/listarPalavraNegada").forward(request, response);
 

@@ -2,6 +2,7 @@ package br.com.forum.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,7 +25,12 @@ public class ListarPalavraNegadaServlet extends HttpServlet {
 
 		PalavraNegadaDAO dao = new PalavraNegadaDAO(connection);
 		
-		List<PalavraNegada> lista = dao.lista();
+		List<PalavraNegada> lista = null;
+		
+		try {
+			lista = dao.lista();
+		} catch (SQLException e) {
+		}
 
 		request.setAttribute("lista", lista);
 		

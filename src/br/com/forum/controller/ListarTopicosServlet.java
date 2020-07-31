@@ -2,6 +2,7 @@ package br.com.forum.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -26,7 +27,11 @@ public class ListarTopicosServlet extends HttpServlet {
 
 		TopicoDAO dao = new TopicoDAO(connection);
 		
-		ArrayList<Topico> lista = dao.listaTopicos(new Long(request.getParameter("t")), numeroExibicao);
+		ArrayList<Topico> lista = null;
+		try {
+			lista = dao.listaTopicos(new Long(request.getParameter("t")), numeroExibicao);
+		} catch (NumberFormatException | SQLException e) {
+		}
 		
 		request.setAttribute("lista", lista);
 		

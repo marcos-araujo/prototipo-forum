@@ -2,6 +2,7 @@ package br.com.forum.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +38,12 @@ public class AdicionarTopicoServlet extends HttpServlet {
 		topico.setIdPai(new Long(idPai));
 		
 		TopicoDAO dao = new TopicoDAO(connection);
-		dao.adiciona(topico);
+		
+		try {
+			dao.adiciona(topico);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		request.getRequestDispatcher("/forum" + pagina).forward(request, response);
 			

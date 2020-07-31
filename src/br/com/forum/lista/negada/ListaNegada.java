@@ -1,6 +1,7 @@
 package br.com.forum.lista.negada;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +15,7 @@ public class ListaNegada{
 	private ArrayList<PalavraNegada> listaPalavra;
 
 	//Lógica de validação dos comentários contra a black list 
-	public String verificaListaNegada(String texto, Connection connection){
+	public String verificaListaNegada(String texto, Connection connection) throws SQLException{
 		
 		palavraDAO = new PalavraNegadaDAO(connection);
 		

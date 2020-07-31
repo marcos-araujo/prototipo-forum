@@ -2,6 +2,7 @@ package br.com.forum.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +23,14 @@ public class DeletarPalavraNegadaServlet extends HttpServlet {
 
 		String id = request.getParameter("idPalavra");
 		PalavraNegadaDAO palavra = new PalavraNegadaDAO(connection);
-		palavra.delete(Long.valueOf(id));
+		
+		try {
+			palavra.delete(Long.valueOf(id));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		request.getRequestDispatcher("/listarPalavraNegada").forward(request, response);
 
