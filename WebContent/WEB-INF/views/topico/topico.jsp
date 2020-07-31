@@ -48,7 +48,7 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td../general/ colspan="2">
+			<td general colspan="2">
 			<%
 				int paginacao;
 				if(lista.size()>10){
@@ -56,7 +56,7 @@
 			%>
 				[
 				<% for(int y=0; y<=paginacao; y++){%>
-					<a href="/Forum/thread.jsp?p=<%=y%>&t=<%=idThread%>&n=<%=numeroExibicao%>"><%=y%></a> 
+					<a href="/Forum/forum?p=<%=y%>&t=<%=idThread%>&n=<%=numeroExibicao%>"><%=y%></a> 
 				<%} %>
 			]
 			<%} %>
