@@ -8,13 +8,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import br.com.forum.lista.negada.ListaNegada;
 import br.com.forum.model.Topico;
 
 public class TopicoDAO {
 
 	private Connection connection;
-	private ListaNegada listaNegada = new ListaNegada();
 
 	public TopicoDAO(Connection connection) {
 		this.connection = connection;
@@ -23,7 +21,7 @@ public class TopicoDAO {
 	public void adiciona(Topico topico) throws SQLException {
 
 		try (PreparedStatement stmtAdiciona = this.connection.prepareStatement("INSERT INTO TOPICO(TEXTO, ID_PAI, DATA) VALUES(?, ?, ?)")) {
-			stmtAdiciona.setString(1, listaNegada.verificaListaNegada(topico.getTexto(), this.connection));
+			stmtAdiciona.setString(1, topico.getTexto());
 			stmtAdiciona.setLong(2, topico.getIdPai());
 			stmtAdiciona.setTimestamp(3, new Timestamp(Calendar.getInstance().getTimeInMillis()));
 			stmtAdiciona.execute();

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.forum.dao.TopicoDAO;
+import br.com.forum.lista.negada.ListaNegada;
 import br.com.forum.model.Topico;
 
 @WebServlet("/adicionarTopico")
@@ -21,6 +22,8 @@ public class AdicionarTopicoServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		Connection connection = (Connection) request.getAttribute("connection");
+		
+		ListaNegada blackList = new ListaNegada();
 		
 		String texto = request.getParameter("texto");
 		String idPai = request.getParameter("idPai");
@@ -33,8 +36,15 @@ public class AdicionarTopicoServlet extends HttpServlet {
 		pagina = pagina + new String((request.getParameter("n") != null) ? "&n=" + new String(request.getParameter("n")) : "");
 		pagina = pagina + new String((request.getParameter("numeroExibicao") != null) ? "&n=" + new String(request.getParameter("numeroExibicao")) : "");
 		
+		String textoVerificado = null;
+		
+		try {
+			textoVerificado = blackList.verificaListaNegada(texto, connection);
+		} catch (SQLException e1) {
+		}
+		
 		Topico topico = new Topico();
-		topico.setTexto(texto);
+		topico.setTexto(textoVerificado);
 		topico.setIdPai(new Long(idPai));
 		
 		TopicoDAO dao = new TopicoDAO(connection);
@@ -42,7 +52,6 @@ public class AdicionarTopicoServlet extends HttpServlet {
 		try {
 			dao.adiciona(topico);
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		
 		request.getRequestDispatcher("/forum" + pagina).forward(request, response);
