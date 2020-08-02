@@ -32,7 +32,7 @@ public class AdicionarTopicoServlet extends HttpServlet {
 		if (pagina.equals(""))
 			pagina = "?";
 		
-		pagina = pagina + new String((request.getParameter("pagina") != null) ? "&p=" + new String(request.getParameter("pagina")) : "");
+		pagina = pagina + new String((request.getParameter("pagina") == "") ? "&p=1" + new String(request.getParameter("pagina")) : "");
 		pagina = pagina + new String((request.getParameter("n") != null) ? "&n=" + new String(request.getParameter("n")) : "");
 		pagina = pagina + new String((request.getParameter("numeroExibicao") != null) ? "&n=" + new String(request.getParameter("numeroExibicao")) : "");
 		

@@ -22,14 +22,27 @@ public class ServletController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		Connection connection = (Connection) request.getAttribute("connection");
 		TopicoDAO dao = new TopicoDAO(connection);
-		ArrayList<Topico> lista = null;
+
+		Integer pagina = Integer.valueOf(request.getParameter("p") != null ? request.getParameter("p"): "1");
 		
+		ArrayList<Topico> lista = null;
 		try {
-			lista = dao.lista();
+			lista = dao.recuperarPagina(pagina);
 		} catch (SQLException e) {
 		}
-		
 		request.setAttribute("lista", lista);
+		
+		Long numeroDeTopicos = null;
+		try {
+			numeroDeTopicos = dao.numeroDeTopicos();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Long paginacao = numeroDeTopicos % 10 == 0 ? numeroDeTopicos / 10 : numeroDeTopicos/10+1;
+		
+		request.setAttribute("paginacao", paginacao);
+		
+		
 		request.getRequestDispatcher("WEB-INF/views/topico/index.jsp").forward(request, response);
 	}
 

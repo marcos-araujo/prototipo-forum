@@ -15,42 +15,34 @@
 	
 	<form action="adicionarTopico" method="post">
 		<input name="idPai" type="hidden" value="0" />
-		<input name="pagina" type="hidden" value="<%=pagina%>" />
+		<input name="pagina" type="hidden" value="${param['p']}" />
 		<textarea name="texto" rows="4" cols="50"></textarea>
 		<br />
 		<input type="submit" value="Enviar" />
 	</form>
 	<br /><br />
+
 	<table>
-		<%
-			ArrayList<Topico> lista = (ArrayList<Topico>)request.getAttribute("lista");
-			int tamanho = (pagina+1)*10;
-			if(tamanho>lista.size())
-				tamanho = lista.size();
-			for(int x=pagina*10; x<tamanho; x++){
-		%>		
+	
+		<c:forEach var="topico" items="${lista}" varStatus="id">
+
 			<tr>
-				<td><a href="listarTopicos?n=<%=x+1%>&t=<%=lista.get(x).getId()%>"><%=(x+1)%>.<%=lista.get(x).getDataFormatada()%></a></td>
-				<td><%=lista.get(x).getTexto()%></td>
+				<td><a href="listarTopicos?n=${topico.id}&t=${topico.id}">${topico.id}.${topico.dataFormatada}</a></td>
+				<td>${topico.texto}</td>
 			</tr>
-		<%
-		}
-		%>
+			
+		</c:forEach>
+
 		<tr>
-			<td>&nbsp;</td>
+			<td colspan="2">&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="3">
-			<%if(lista.size()>10){
-				int paginacao;
-					paginacao = (lista.size()%10 == 0)?(lista.size()/10)-1:(lista.size()/10);
-			%>
-			[
-			<% for(int y=0; y<=paginacao; y++){%>
-				<a href="/Forum/forum?p=<%=y%>"><%=y%></a> 
-			<%} %>
-			]
-			<%} %>
+			<td colspan="2">
+				[
+				<c:forEach var="numeroPagina" begin="1" end="${paginacao}">
+					<a href="/Forum/forum?p=${numeroPagina}">${numeroPagina}</a> 
+				</c:forEach>
+				]
 			</td>
 		</tr>
 	</table>

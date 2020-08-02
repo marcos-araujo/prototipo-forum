@@ -55,7 +55,7 @@ public class TopicoDAO {
 
 	public ArrayList<Topico> lista() throws SQLException {
 
-		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = 0");	ResultSet rs = stmt.executeQuery()) {
+		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = 0"); ResultSet rs = stmt.executeQuery()) {
 
 			ArrayList<Topico> topicos = new ArrayList<Topico>();
 
@@ -74,6 +74,41 @@ public class TopicoDAO {
 		}
 	}
 
+	public ArrayList<Topico> recuperarPagina(Integer pagina) throws SQLException {
+		ResultSet rs = null;
+		
+		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = 0 LIMIT 10 OFFSET ? ")) {
+			stmt.setInt(1, (pagina-1)*10);
+			rs = stmt.executeQuery();
+					
+			ArrayList<Topico> topicos = new ArrayList<Topico>();
+
+			while (rs.next()) {
+				Topico topico = new Topico();
+				topico.setId(rs.getLong("id"));
+				topico.setTexto(rs.getString("texto"));
+				topico.setIdPai(rs.getLong("id_pai"));
+				Calendar data = Calendar.getInstance();
+				data.setTimeInMillis(rs.getTimestamp("data").getTime());
+				topico.setData(data);
+				topicos.add(topico);
+			}
+			return topicos;
+			
+		}
+	}
+
+	public Long numeroDeTopicos() throws SQLException {
+		ResultSet rs = null;
+		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT COUNT(*) AS QUANTIDADE FROM TOPICO WHERE ID_PAI = 0 ")) {
+			rs = stmt.executeQuery();
+			rs.next();
+			Long quantidade = rs.getLong("QUANTIDADE");
+			return quantidade;
+		}
+		
+	}
+	
 	public ArrayList<Topico> listaTopicos(long id, long exibicao) throws SQLException {
 
 		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = ?")) {
