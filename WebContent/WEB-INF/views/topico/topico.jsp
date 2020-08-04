@@ -14,11 +14,9 @@
 		<%
 			Integer pagina = (request.getParameter("p") != null) ? new Integer(request.getParameter("p")) : 0;
 			Integer idThread = (request.getParameter("t") != null) ? new Integer(request.getParameter("t")) : 0;
-			Integer numeroExibicao = Integer.valueOf(request.getAttribute("numeroExibicao").toString());
 			
 			ArrayList<Topico> lista = (ArrayList<Topico>)request.getAttribute("lista");
 			
-			//Mostra 10 em cada página
 			int tamanho = (pagina+1)*10;
 			if(tamanho>lista.size())
 				tamanho = lista.size();
@@ -33,7 +31,6 @@
 						<input name="thread" type="hidden" value="<%=idThread%>" />
 						<input name="pagina" type="hidden" value="<%=pagina%>" />
 						<input name="idPai" type="hidden" value="<%=lista.get(x).getId()%>" />
-						<input name="numeroExibicao" type="hidden" value="<%=numeroExibicao%>" />
 						<textarea name="texto" rows="3" cols="40"></textarea>
 						<br />
 						<input class="botao" type="submit" value="Responder" />
@@ -56,7 +53,7 @@
 			%>
 				[
 				<% for(int y=0; y<=paginacao; y++){%>
-					<a href="/Forum/forum?p=<%=y%>&t=<%=idThread%>&n=<%=numeroExibicao%>"><%=y%></a> 
+					<a href="/Forum/forum?p=<%=y%>&t=<%=idThread%>"><%=y%></a> 
 				<%} %>
 			]
 			<%} %>

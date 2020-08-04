@@ -109,36 +109,36 @@ public class TopicoDAO {
 		
 	}
 	
-	public ArrayList<Topico> listaTopicos(long id, long exibicao) throws SQLException {
+	public ArrayList<Topico> listaTopicos(Long idTopico) throws SQLException {
 
 		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = ?")) {
 
 			ArrayList<Topico> topicos = new ArrayList<Topico>();
 
-			Topico topico = this.busca(id);
-			topico.setNivel(new Long(exibicao).toString());
+			Topico topico = this.busca(idTopico);
+			topico.setNivel(idTopico.toString());
 			topicos.add(topico);
 
-			stmt.setLong(1, id);
+			stmt.setLong(1, idTopico);
 			try(ResultSet rs = stmt.executeQuery()){
 
-				id = 1;
+				idTopico = 1l;
 				while (rs.next()) {
 					topico = new Topico();
 					topico.setId(rs.getLong("id"));
 					topico.setTexto(rs.getString("texto"));
 					topico.setIdPai(rs.getLong("id_pai"));
-					topico.setNivel("<spam style='padding: 0 20px;'></spam>" + exibicao + "." + id);
+					topico.setNivel("<spam style='padding: 0 20px;'></spam>" + idTopico + "." + idTopico);
 					Calendar data = Calendar.getInstance();
 					data.setTimeInMillis(rs.getTimestamp("data").getTime());
 					topico.setData(data);
 					topicos.add(topico);
-					id++;
+					idTopico++;
 				}
 				
 			}
 
-			id = 1;
+			idTopico = 1l;
 			int index = 2;
 
 			if (topicos.size() > 1) {
@@ -158,12 +158,12 @@ public class TopicoDAO {
 							Calendar data = Calendar.getInstance();
 							data.setTimeInMillis(rs.getTimestamp("data").getTime());
 							topico.setData(data);
-							topico.setNivel("<spam style='padding: 0 20px;'></spam>" + topicos.get(indicePilha).getNivel() + "." + id);
+							topico.setNivel("<spam style='padding: 0 20px;'></spam>" + topicos.get(indicePilha).getNivel() + "." + idTopico);
 							topicos.add(index, topico);
 							index++;
-							id++;
+							idTopico++;
 						}
-						id = 1;
+						idTopico = 1l;
 						
 					}
 

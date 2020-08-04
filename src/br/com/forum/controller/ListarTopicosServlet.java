@@ -23,19 +23,15 @@ public class ListarTopicosServlet extends HttpServlet {
 		
 		Connection connection = (Connection) request.getAttribute("connection");
 		
-		Integer numeroExibicao = (request.getParameter("n") != null) ? new Integer(request.getParameter("n")) : 0;
-
 		TopicoDAO dao = new TopicoDAO(connection);
 		
 		ArrayList<Topico> lista = null;
 		try {
-			lista = dao.listaTopicos(new Long(request.getParameter("t")), numeroExibicao);
+			lista = dao.listaTopicos(Long.valueOf(request.getParameter("t")));
 		} catch (NumberFormatException | SQLException e) {
 		}
 		
 		request.setAttribute("lista", lista);
-		
-		request.setAttribute("numeroExibicao", numeroExibicao);
 		
 		request.getRequestDispatcher("WEB-INF/views/topico/topico.jsp").forward(request, response);
 
