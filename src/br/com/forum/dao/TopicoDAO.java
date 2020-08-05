@@ -109,7 +109,76 @@ public class TopicoDAO {
 		
 	}
 	
-	public ArrayList<Topico> listaTopicos(Long idTopico) throws SQLException {
+	public Long quantidadeTopicos(Long idTopico) throws SQLException {
+
+		Long quantidade = 0l;
+		
+		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = ?")) {
+
+			ArrayList<Topico> topicos = new ArrayList<Topico>();
+
+			Topico topico = this.busca(idTopico);
+			topico.setNivel(idTopico.toString());
+			topicos.add(topico);
+			quantidade++;
+
+			stmt.setLong(1, idTopico);
+			try(ResultSet rs = stmt.executeQuery()){
+
+				idTopico = 1l;
+				while (rs.next()) {
+					topico = new Topico();
+					topico.setId(rs.getLong("id"));
+					topico.setTexto(rs.getString("texto"));
+					topico.setIdPai(rs.getLong("id_pai"));
+					topico.setNivel("<spam style='padding: 0 20px;'></spam>" + idTopico + "." + idTopico);
+					Calendar data = Calendar.getInstance();
+					data.setTimeInMillis(rs.getTimestamp("data").getTime());
+					topico.setData(data);
+					topicos.add(topico);
+					quantidade++;
+					idTopico++;
+				}
+				
+			}
+
+			idTopico = 1l;
+			int index = 2;
+
+			if (topicos.size() > 1) {
+
+				for (int indicePilha = 1; indicePilha < topicos.size(); indicePilha++) {
+
+					stmt.setLong(1, topicos.get(indicePilha).getId());
+					try(ResultSet rs = stmt.executeQuery()){
+						
+						index = indicePilha + 1;
+						while (rs.next()) {
+							topico = new Topico();
+							topico.setId(rs.getLong("id"));
+							topico.setTexto(rs.getString("texto"));
+							topico.setIdPai(rs.getLong("id_pai"));
+							Calendar data = Calendar.getInstance();
+							data.setTimeInMillis(rs.getTimestamp("data").getTime());
+							topico.setData(data);
+							topico.setNivel("<spam style='padding: 0 20px;'></spam>" + topicos.get(indicePilha).getNivel() + "." + idTopico);
+							topicos.add(index, topico);
+							quantidade++;
+							index++;
+							idTopico++;
+						}
+						idTopico = 1l;
+						
+					}
+
+				}
+			}
+			
+			return quantidade;
+		}
+	}
+
+	public ArrayList<Topico> listaTopicos(Long idTopico, Long pagina) throws SQLException {
 
 		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = ?")) {
 
@@ -150,7 +219,6 @@ public class TopicoDAO {
 						
 						index = indicePilha + 1;
 						while (rs.next()) {
-							
 							topico = new Topico();
 							topico.setId(rs.getLong("id"));
 							topico.setTexto(rs.getString("texto"));
@@ -169,8 +237,11 @@ public class TopicoDAO {
 
 				}
 			}
-
-			return topicos;
+			
+			Integer inicio = (pagina.intValue()-1)*10;
+			Integer fim = inicio + 10 > topicos.size() ? topicos.size() : inicio + 10;
+			
+			return new ArrayList<Topico>(topicos.subList(inicio, fim));
 		}
 	}
 

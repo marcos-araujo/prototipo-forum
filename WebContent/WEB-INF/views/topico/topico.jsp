@@ -10,27 +10,20 @@
 	<a href="forum">[Home]</a>
 	<h1>Fórum</h1>
 	<hr />
+	
+	
 	<table>
-		<%
-			Integer pagina = (request.getParameter("p") != null) ? new Integer(request.getParameter("p")) : 0;
-			Integer idThread = (request.getParameter("t") != null) ? new Integer(request.getParameter("t")) : 0;
-			
-			ArrayList<Topico> lista = (ArrayList<Topico>)request.getAttribute("lista");
-			
-			int tamanho = (pagina+1)*10;
-			if(tamanho>lista.size())
-				tamanho = lista.size();
-			for(int x=pagina*10; x<tamanho; x++){
-		%>		
+		
+		<c:forEach var="topico" items="${lista}" varStatus="id">
 			<tr>
-				<td><%=lista.get(x).getNivel()%>. <%=lista.get(x).getDataFormatada()%>: <a href="javascript:responder(<%=lista.get(x).getId()%>);"><%=lista.get(x).getTexto()%> </a></td>
+				<td>${topico.nivel}. ${topico.dataFormatada}: <a href="javascript:responder(${topico.id});">${topico.texto}</a></td>
 			</tr>
 			<tr>
-				<td id="<%=lista.get(x).getId()%>" class="esconder">
+				<td id="${topico.id}" class="esconder">
 					<form action="adicionarTopico">
-						<input name="thread" type="hidden" value="<%=idThread%>" />
-						<input name="pagina" type="hidden" value="<%=pagina%>" />
-						<input name="idPai" type="hidden" value="<%=lista.get(x).getId()%>" />
+						<input name="thread" type="hidden" value="${param['t']}" />
+						<input name="pagina" type="hidden" value="${param['p']}" />
+						<input name="idPai" type="hidden" value="${topico.id}" />
 						<textarea name="texto" rows="3" cols="40"></textarea>
 						<br />
 						<input class="botao" type="submit" value="Responder" />
@@ -38,25 +31,17 @@
 					<br />
 				</td>
 			</tr>
-		<%
-		}
-		%>
+		</c:forEach>
+	
+		<tr><td colspan="2">&nbsp;</td></tr>
+		
 		<tr>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td general colspan="2">
-			<%
-				int paginacao;
-				if(lista.size()>10){
-					paginacao = (lista.size()%10 == 0)?(lista.size()/10)-1:(lista.size()/10);
-			%>
+			<td colspan="2">
 				[
-				<% for(int y=0; y<=paginacao; y++){%>
-					<a href="/Forum/forum?p=<%=y%>&t=<%=idThread%>"><%=y%></a> 
-				<%} %>
-			]
-			<%} %>
+					<c:forEach var="numeroPagina" begin="1" end="${paginacao}">
+						<a href="/Forum/listarTopicos?p=${numeroPagina}&t=${param['t']}">${numeroPagina}</a> 
+					</c:forEach>
+				]
 			</td>
 		</tr>
 	</table>
