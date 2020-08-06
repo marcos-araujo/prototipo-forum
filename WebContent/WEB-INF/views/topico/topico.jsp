@@ -1,8 +1,3 @@
-<%@ page import="java.util.List" %>
-<%@ page import="br.com.forum.model.*" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="br.com.forum.model.Topico" %>
-<%@ page import="br.com.forum.dao.TopicoDAO" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:import url="../general/header.jsp" />
@@ -11,16 +6,14 @@
 	<h1>Fórum</h1>
 	<hr />
 	
-	
 	<table>
-		
 		<c:forEach var="topico" items="${lista}" varStatus="id">
 			<tr>
 				<td>${topico.nivel}. ${topico.dataFormatada}: <a href="javascript:responder(${topico.id});">${topico.texto}</a></td>
 			</tr>
 			<tr>
 				<td id="${topico.id}" class="esconder">
-					<form action="adicionarTopico">
+					<form action="topicoAdicionar">
 						<input name="thread" type="hidden" value="${param['t']}" />
 						<input name="pagina" type="hidden" value="${param['p']}" />
 						<input name="idPai" type="hidden" value="${topico.id}" />
@@ -39,7 +32,7 @@
 			<td colspan="2">
 				[
 					<c:forEach var="numeroPagina" begin="1" end="${paginacao}">
-						<a href="/Forum/listarTopicos?p=${numeroPagina}&t=${param['t']}">${numeroPagina}</a> 
+						<a href="/Forum/topicoListar?p=${numeroPagina}&t=${param['t']}">${numeroPagina}</a> 
 					</c:forEach>
 				]
 			</td>

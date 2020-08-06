@@ -1,6 +1,6 @@
 package br.com.forum.model;
 
-public class PalavraNegada{
+public class ItemBlackList{
 	
 	private Long id;
 	private String palavra;

@@ -1,9 +1,8 @@
-package br.com.forum.controller;
+package br.com.forum.controller.blacklist;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.forum.dao.PalavraNegadaDAO;
-import br.com.forum.model.PalavraNegada;
+import br.com.forum.dao.BlackListDAO;
+import br.com.forum.model.ItemBlackList;
 
-@WebServlet("/listarPalavraNegada")
-public class ListarPalavraNegadaServlet extends HttpServlet {
+@WebServlet("/blacklistAdicionar")
+public class BlackListAdicionarServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,18 +22,19 @@ public class ListarPalavraNegadaServlet extends HttpServlet {
 		
 		Connection connection = (Connection) request.getAttribute("connection");
 
-		PalavraNegadaDAO dao = new PalavraNegadaDAO(connection);
+		String texto = request.getParameter("palavra");
+		ItemBlackList palavra = new ItemBlackList();
+		palavra.setPalavra(texto);
 		
-		List<PalavraNegada> lista = null;
+		BlackListDAO dao = new BlackListDAO(connection);
 		
 		try {
-			lista = dao.lista();
+			dao.adiciona(palavra);
 		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		request.setAttribute("lista", lista);
 		
-		request.getRequestDispatcher("WEB-INF/views/blacklist/listaNegada.jsp").forward(request, response);
+		request.getRequestDispatcher("/blacklistListar").forward(request, response);
 
 	}
 

@@ -1,4 +1,4 @@
-package br.com.forum.controller;
+package br.com.forum.controller.topico;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.forum.dao.TopicoDAO;
 import br.com.forum.model.Topico;
 
-@WebServlet("/listarTopicos")
-public class ListarTopicosServlet extends HttpServlet {
+@WebServlet("/topicoListar")
+public class TopicoListarServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 

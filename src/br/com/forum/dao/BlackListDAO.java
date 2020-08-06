@@ -6,24 +6,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import br.com.forum.model.PalavraNegada;
+import br.com.forum.model.ItemBlackList;
 
-public class PalavraNegadaDAO {
+public class BlackListDAO {
 
 	private Connection connection;
 
-	public PalavraNegadaDAO(Connection connection) {
+	public BlackListDAO(Connection connection) {
 		this.connection = connection;
 	}
 
-	public ArrayList<PalavraNegada> lista() throws SQLException {
+	public ArrayList<ItemBlackList> lista() throws SQLException {
 
 		try (PreparedStatement stmtLista = this.connection.prepareStatement("SELECT ID, PALAVRA FROM PALAVRA_NEGADA"); ResultSet rs = stmtLista.executeQuery()) {
 
-			ArrayList<PalavraNegada> palavras = new ArrayList<PalavraNegada>();
+			ArrayList<ItemBlackList> palavras = new ArrayList<ItemBlackList>();
 
 			while (rs.next()) {
-				PalavraNegada palavra = new PalavraNegada();
+				ItemBlackList palavra = new ItemBlackList();
 				palavra.setId(rs.getLong("id"));
 				palavra.setPalavra(rs.getString("palavra"));
 				palavras.add(palavra);
@@ -33,10 +33,10 @@ public class PalavraNegadaDAO {
 		}
 	}
 
-	public void adiciona(PalavraNegada palavra) throws SQLException {
+	public void adiciona(ItemBlackList item) throws SQLException {
 		
 		try (PreparedStatement stmtAdiciona = this.connection.prepareStatement("INSERT INTO PALAVRA_NEGADA(PALAVRA) VALUES(?)")){
-			stmtAdiciona.setString(1, palavra.getPalavra());
+			stmtAdiciona.setString(1, item.getPalavra());
 			stmtAdiciona.execute();
 		} 
 

@@ -2,11 +2,11 @@
 
 <c:import url="../general/header.jsp" />
 
-	<a href="listarPalavraNegada">[Blacklist]</a>
+	<a href="blacklistListar">[Blacklist]</a>
 	<h1>Fórum</h1>
 	<hr />
 	
-	<form action="adicionarTopico" method="post">
+	<form action="topicoAdicionar" method="post">
 		<input name="idPai" type="hidden" value="0" />
 		<input name="pagina" type="hidden" value="${param['p']}" />
 		<textarea name="texto" rows="4" cols="50"></textarea>
@@ -19,7 +19,7 @@
 	
 		<c:forEach var="topico" items="${lista}" varStatus="id">
 			<tr>
-				<td><a href="listarTopicos?t=${topico.id}">${topico.id}.${topico.dataFormatada}</a></td>
+				<td><a href="topicoListar?t=${topico.id}">${topico.id}.${topico.dataFormatada}</a></td>
 				<td>${topico.texto}</td>
 			</tr>
 		</c:forEach>

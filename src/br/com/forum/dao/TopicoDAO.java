@@ -77,7 +77,7 @@ public class TopicoDAO {
 	public ArrayList<Topico> recuperarPagina(Integer pagina) throws SQLException {
 		ResultSet rs = null;
 		
-		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = 0 LIMIT 10 OFFSET ? ")) {
+		try (PreparedStatement stmt = this.connection.prepareStatement("SELECT ID, TEXTO, ID_PAI, DATA FROM TOPICO WHERE ID_PAI = 0 ORDER BY ID DESC LIMIT 10 OFFSET ?")) {
 			stmt.setInt(1, (pagina-1)*10);
 			rs = stmt.executeQuery();
 					

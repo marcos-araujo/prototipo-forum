@@ -6,7 +6,7 @@
 	<h1>Blacklist</h1>
 	<hr />
 	
-	<form action="adicionarPalavraNegada" method="post">
+	<form action="blacklistAdicionar" method="post">
 		<input type="hidden" name="blacklist" value="1" />
 		<input type="text" name="palavra" />
 		<input type="submit" value="Gravar" />
@@ -18,7 +18,7 @@
 		<c:forEach var="palavra" items="${lista}" varStatus="id">
 			<tr>
 				<td>${palavra.palavra}</td>
-				<td><a href="/Forum/deletarPalavraNegada?idPalavra=${palavra.id}">Remover</a></td>
+				<td><a href="/Forum/blacklistDeletar?idPalavra=${palavra.id}">Remover</a></td>
 			</tr>
 		</c:forEach>
 	</table>

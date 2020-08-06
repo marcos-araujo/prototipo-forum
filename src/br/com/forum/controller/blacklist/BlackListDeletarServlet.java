@@ -1,4 +1,4 @@
-package br.com.forum.controller;
+package br.com.forum.controller.blacklist;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.forum.dao.PalavraNegadaDAO;
+import br.com.forum.dao.BlackListDAO;
 
-@WebServlet("/deletarPalavraNegada")
-public class DeletarPalavraNegadaServlet extends HttpServlet {
+@WebServlet("/blacklistDeletar")
+public class BlackListDeletarServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,7 +22,7 @@ public class DeletarPalavraNegadaServlet extends HttpServlet {
 		Connection connection = (Connection) request.getAttribute("connection");
 
 		String id = request.getParameter("idPalavra");
-		PalavraNegadaDAO palavra = new PalavraNegadaDAO(connection);
+		BlackListDAO palavra = new BlackListDAO(connection);
 		
 		try {
 			palavra.delete(Long.valueOf(id));
@@ -32,7 +32,7 @@ public class DeletarPalavraNegadaServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		request.getRequestDispatcher("/listarPalavraNegada").forward(request, response);
+		request.getRequestDispatcher("/blacklistListar").forward(request, response);
 
 	}
 
