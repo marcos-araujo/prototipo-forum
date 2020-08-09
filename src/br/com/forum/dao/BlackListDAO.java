@@ -18,7 +18,7 @@ public class BlackListDAO {
 
 	public ArrayList<ItemBlackList> lista() throws SQLException {
 
-		try (PreparedStatement stmtLista = this.connection.prepareStatement("SELECT ID, PALAVRA FROM PALAVRA_NEGADA"); ResultSet rs = stmtLista.executeQuery()) {
+		try (PreparedStatement stmtLista = this.connection.prepareStatement("SELECT ID, PALAVRA FROM BLACKLIST"); ResultSet rs = stmtLista.executeQuery()) {
 
 			ArrayList<ItemBlackList> palavras = new ArrayList<ItemBlackList>();
 
@@ -35,7 +35,7 @@ public class BlackListDAO {
 
 	public void adiciona(ItemBlackList item) throws SQLException {
 		
-		try (PreparedStatement stmtAdiciona = this.connection.prepareStatement("INSERT INTO PALAVRA_NEGADA(PALAVRA) VALUES(?)")){
+		try (PreparedStatement stmtAdiciona = this.connection.prepareStatement("INSERT INTO BLACKLIST(PALAVRA) VALUES(?)")){
 			stmtAdiciona.setString(1, item.getPalavra());
 			stmtAdiciona.execute();
 		} 
@@ -44,7 +44,7 @@ public class BlackListDAO {
 
 	public void delete(long id) throws SQLException {
 		
-		try (PreparedStatement stmtDelete = connection.prepareStatement("DELETE FROM PALAVRA_NEGADA WHERE ID = ?")){
+		try (PreparedStatement stmtDelete = connection.prepareStatement("DELETE FROM BLACKLIST WHERE ID = ?")){
 			stmtDelete.setLong(1, id);
 			stmtDelete.execute();
 		}

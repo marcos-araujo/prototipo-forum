@@ -22,9 +22,8 @@ public class BlackListListarServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		Connection connection = (Connection) request.getAttribute("connection");
-
-		BlackListDAO dao = new BlackListDAO(connection);
 		
+		BlackListDAO dao = new BlackListDAO(connection);
 		List<ItemBlackList> lista = null;
 		
 		try {
@@ -33,7 +32,6 @@ public class BlackListListarServlet extends HttpServlet {
 		}
 
 		request.setAttribute("lista", lista);
-		
 		request.getRequestDispatcher("WEB-INF/views/blacklist/blackList.jsp").forward(request, response);
 
 	}

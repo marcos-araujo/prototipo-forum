@@ -31,7 +31,6 @@ public class BlackListAdicionarServlet extends HttpServlet {
 		try {
 			dao.adiciona(palavra);
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		
 		request.getRequestDispatcher("/blacklistListar").forward(request, response);

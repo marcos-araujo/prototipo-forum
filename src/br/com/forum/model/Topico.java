@@ -10,7 +10,8 @@ public class Topico{
 	private String texto;
 	private Long idPai;
 	private Calendar data;
-	private String nivel;
+	private Long nivel;
+	
 	
 	public Long getId(){
 		return id;
@@ -40,10 +41,10 @@ public class Topico{
 		this.data = data;
 	}
 	
-	public String getNivel(){
+	public Long getNivel(){
 		return nivel;
 	}
-	public void setNivel(String nivel){
+	public void setNivel(Long nivel){
 		this.nivel = nivel;
 	}
 	

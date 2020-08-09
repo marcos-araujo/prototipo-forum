@@ -21,6 +21,7 @@ public class BlackList {
 
 			String regex = "(?i)" + palavraNegada.getPalavra().replace("a", "(a|@|�|�|�|�)")
 					.replace("i", "(i|1|�|�)").replace("o", "(o|0|�|�|�|�)").replace("s", "(s|&)");
+			
 			Pattern p = Pattern.compile(regex);
 			Matcher m = p.matcher(texto);
 			if (m.find())
