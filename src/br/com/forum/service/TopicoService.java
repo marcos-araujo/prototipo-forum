@@ -1,4 +1,4 @@
-package br.com.forum.dao.service;
+package br.com.forum.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class TopicoService {
 	
 	private TopicoDAO topicoDAO;
 	
-	private static Integer TAMANHO_PAGINA = 10;
+	public static final Integer TAMANHO_PAGINA = 10;
 	
 	public TopicoService(TopicoDAO topicoDAO) {
 		this.topicoDAO = topicoDAO;
@@ -29,12 +29,12 @@ public class TopicoService {
 		}
 
 		Long numeroPaginas = recuperaNumeroPaginas(Long.valueOf(respostas.size()));
-		ArrayList<Topico> paginaRespostas = recuperarPagina(respostas, pagina);
+		ArrayList<Topico> paginaRespostas = extrairPagina(respostas, pagina);
 		
 		return montaPagina(paginaRespostas, numeroPaginas);
 	}
 	
-	public ArrayList<Topico> recuperarPagina(ArrayList<Topico> respostas, Long pagina){
+	public ArrayList<Topico> extrairPagina(ArrayList<Topico> respostas, Long pagina){
 		Integer inicio = (pagina.intValue()-1) * TAMANHO_PAGINA;
 		Integer fim = inicio + TAMANHO_PAGINA > respostas.size() ? respostas.size() : inicio + TAMANHO_PAGINA;
 		
@@ -48,7 +48,6 @@ public class TopicoService {
 		Long numeroPaginas = recuperaNumeroPaginas(topicoDAO.numeroTopicos());
 		
 		return montaPagina(paginaPerguntas, numeroPaginas);
-		
 	}
 	
 	public Pagina montaPagina(ArrayList<Topico> topicos, Long numeroPaginas) {

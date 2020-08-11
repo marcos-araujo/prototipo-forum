@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.forum.dao.BlackListDAO;
 import br.com.forum.model.ItemBlackList;
+import br.com.forum.service.BlackListService;
 
 @WebServlet("/blacklistAdicionar")
 public class BlackListAdicionarServlet extends HttpServlet {
@@ -19,22 +20,22 @@ public class BlackListAdicionarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		Connection connection = (Connection) request.getAttribute("connection");
-
-		String texto = request.getParameter("palavra");
-		ItemBlackList palavra = new ItemBlackList();
-		palavra.setPalavra(texto);
-		
-		BlackListDAO dao = new BlackListDAO(connection);
-		
 		try {
-			dao.adiciona(palavra);
+			Connection connection = (Connection) request.getAttribute("connection");
+			
+			BlackListDAO blackListDAO = new BlackListDAO(connection);
+			BlackListService blackListService = new BlackListService(blackListDAO);
+
+			String texto = request.getParameter("palavra");
+			ItemBlackList palavra = new ItemBlackList();
+			palavra.setPalavra(texto);
+			
+			blackListService.adicionaItem(palavra);
+		
+			response.sendRedirect("blacklistListar");
+			
 		} catch (SQLException e) {
 		}
-		
-		request.getRequestDispatcher("/blacklistListar").forward(request, response);
-
 	}
 
 }

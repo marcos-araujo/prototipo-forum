@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.forum.dao.BlackListDAO;
+import br.com.forum.service.BlackListService;
 
 @WebServlet("/blacklistDeletar")
 public class BlackListDeletarServlet extends HttpServlet {
@@ -18,19 +19,20 @@ public class BlackListDeletarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		Connection connection = (Connection) request.getAttribute("connection");
-		
-		String id = request.getParameter("idPalavra");
-		BlackListDAO palavra = new BlackListDAO(connection);
-		
 		try {
-			palavra.delete(Long.valueOf(id));
+			Connection connection = (Connection) request.getAttribute("connection");
+			
+			String id = request.getParameter("idPalavra");
+
+			BlackListDAO blackListDAO = new BlackListDAO(connection);
+			BlackListService blackListService = new BlackListService(blackListDAO);
+			
+			blackListService.deletarItem(Long.valueOf(id));
+			
+			response.sendRedirect("blacklistListar");
+			
 		} catch (NumberFormatException | SQLException e) {
 		}
-		
-		request.getRequestDispatcher("/blacklistListar").forward(request, response);
-
 	}
 
 }

@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.forum.dao.TopicoDAO;
-import br.com.forum.dao.service.TopicoService;
 import br.com.forum.model.Pagina;
+import br.com.forum.service.TopicoService;
 
 @WebServlet("/forum")
-public class TopicoServlet extends HttpServlet {
+public class PerguntaHomeServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 

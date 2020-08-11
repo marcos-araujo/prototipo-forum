@@ -1,6 +1,5 @@
-package br.com.forum.blacklist;
+package br.com.forum.service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -9,13 +8,11 @@ import java.util.regex.Pattern;
 import br.com.forum.dao.BlackListDAO;
 import br.com.forum.model.ItemBlackList;
 
-public class BlackList {
+public class MediacaoService {
 
-	public String verificar(String texto, Connection connection) throws SQLException {
+	public String verificar(String texto, BlackListDAO blackListDAO) throws SQLException {
 
-		BlackListDAO palavraDAO = new BlackListDAO(connection);
-
-		ArrayList<ItemBlackList> listaPalavra = palavraDAO.lista();
+		ArrayList<ItemBlackList> listaPalavra = blackListDAO.lista();
 
 		for (ItemBlackList palavraNegada : listaPalavra) {
 
@@ -26,6 +23,7 @@ public class BlackList {
 			Matcher m = p.matcher(texto);
 			if (m.find())
 				texto = texto.replaceAll(m.group(), m.group().replaceAll(".", "x"));
+			
 		}
 		return texto;
 
