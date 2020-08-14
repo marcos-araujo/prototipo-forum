@@ -33,7 +33,7 @@
 			<td colspan="2">
 				[
 					<c:forEach var="numeroPagina" begin="1" end="${pagina.paginacao}">
-						<a href="/Forum/topicoListar?pagina=${numeroPagina}&t=${param['t']}">${numeroPagina}</a> 
+						<a href="topicoListar?pagina=${numeroPagina}&t=${param['t']}">${numeroPagina}</a> 
 					</c:forEach>
 				]
 			</td>
