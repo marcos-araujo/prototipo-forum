@@ -2,7 +2,7 @@
 
 <c:import url="../general/header.jsp" />
 
-	<a href="forum">[Home]</a>
+	<a href="home">[Home]</a>
 	<h1>Fórum</h1>
 	<hr />
 	
