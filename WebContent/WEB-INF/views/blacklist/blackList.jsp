@@ -2,7 +2,7 @@
 
 <c:import url="../general/header.jsp" />
 
-	<a href="forum">[Home]</a>
+	<a href="home">[Home]</a>
 	<h1>Blacklist</h1>
 	<hr />
 	
@@ -18,7 +18,7 @@
 		<c:forEach var="palavra" items="${lista}" varStatus="id">
 			<tr>
 				<td>${palavra.palavra}</td>
-				<td><a href="/Forum/blacklistDeletar?idPalavra=${palavra.id}">Remover</a></td>
+				<td><a href="blacklistDeletar?idPalavra=${palavra.id}">Remover</a></td>
 			</tr>
 		</c:forEach>
 	</table>

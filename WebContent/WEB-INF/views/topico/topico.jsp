@@ -2,7 +2,7 @@
 
 <c:import url="../general/header.jsp" />
 
-	<a href="forum">[Home]</a>
+	<a href="home">[Home]</a>
 	<h1>Fórum</h1>
 	<hr />
 	
@@ -33,7 +33,7 @@
 			<td colspan="2">
 				[
 					<c:forEach var="numeroPagina" begin="1" end="${pagina.paginacao}">
-						<a href="/Forum/topicoListar?pagina=${numeroPagina}&t=${param['t']}">${numeroPagina}</a> 
+						<a href="topicoListar?pagina=${numeroPagina}&t=${param['t']}">${numeroPagina}</a> 
 					</c:forEach>
 				]
 			</td>
