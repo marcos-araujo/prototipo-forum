@@ -42,7 +42,7 @@ public class TopicoAdicionarServlet extends HttpServlet {
 			boolean ehPergunta = idTopico == null || idTopico.equals("null");
 			
 			if(ehPergunta)
-				response.sendRedirect("forum");
+				response.sendRedirect("home");
 			else
 				response.sendRedirect("topicoListar?t=" + idTopico);
 
