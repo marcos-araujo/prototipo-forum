@@ -15,7 +15,7 @@ public class BlackListService {
 	}
 
 	public List<ItemBlackList> recuperaBlackList() throws SQLException {
-		return blackListDAO.lista();
+		return recuperaBlackList(blackListDAO.lista());
 	}
 	
 	public void deletarItem(Long id) throws SQLException {
@@ -26,4 +26,13 @@ public class BlackListService {
 		blackListDAO.adiciona(palavra);
 	}
 	
+	private List<ItemBlackList> recuperaBlackList(List<ItemBlackList> lista){
+
+		lista.forEach(item -> {
+			item.setPalavra(item.getPalavra().replace("(?i)", "").replace("(a|@|ã|á|à|â)", "a")
+					.replace("(i|1|í|ì)", "i").replace("(o|0|ó|ò|ô|õ)", "o").replace("(s|&)", "s"));
+		});
+		
+		return lista;
+	}
 }
