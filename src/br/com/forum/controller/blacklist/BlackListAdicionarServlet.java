@@ -27,6 +27,9 @@ public class BlackListAdicionarServlet extends HttpServlet {
 			BlackListService blackListService = new BlackListService(blackListDAO);
 
 			String texto = request.getParameter("palavra");
+			
+			texto = "(?i)" + texto.replace("a", "(a|@|ã|á|à|â)").replace("i", "(i|1|í|ì)").replace("o", "(o|0|ó|ò|ô|õ)").replace("s", "(s|&)");
+			
 			ItemBlackList palavra = new ItemBlackList();
 			palavra.setPalavra(texto);
 			
